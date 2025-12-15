@@ -38,6 +38,7 @@ gesture_dictionary = {
     "screenshot":   [0, 1, 1, 1, 0],
     "scroll":       [0, 1, 0, 0, 0]
 }
+```
 
 ## Installation & Run
 
@@ -45,8 +46,10 @@ Install all required dependencies:
 
 ```bash
 pip install opencv-python mediapipe pyautogui
+```
 
 ## Run the Project
 
 ```bash
 python main.py
+```
