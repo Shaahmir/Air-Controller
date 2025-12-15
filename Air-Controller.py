@@ -26,11 +26,17 @@ def main ():
             frame = cv2.flip(frame, 1)
             frameRGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
+            draw = mp.solutions.drawing_utils
+
             processed = hands.process(frameRGB)
             landmarks_list = []
 
             if processed.multi_hand_landmarks:
-                print(processed.multi_hand_landmarks)
+                hand_landmarks = processed.multi_hand_landmarks[0]
+                draw.draw_landmarks(frame, hand_landmarks, mpHands.HAND_CONNECTIONS)
+
+                for lm in hand_landmarks.landmark:
+                    landmarks_list.append((lm.x, lm.y))
 
             cv2.imshow("Window", frame)
 
