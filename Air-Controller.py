@@ -72,127 +72,127 @@ def finger_detection(landmarks_list,fingers):
 
 def volume_control(fingers,frame):
  
- #=========== for volume up: ===========
+    #=========== for volume up: ===========
 
- if fingers== gesture_dictionary["volume_up"]:
-    pyautogui.press("volumeup")
-    cv2.putText(
-      frame, #frame to put text on
-      "GESTURE: VOLUME UP", #string to show
-      (10,50), #where to show on screen
-      cv2.FONT_HERSHEY_SIMPLEX, #font type
-      1, #scaling of text
-      (255,255,255), #colour of text
-      2 #thickness of text
-    )
+    if fingers== gesture_dictionary["volume_up"]:
+        pyautogui.press("volumeup")
+        cv2.putText(
+            frame, #frame to put text on
+            "GESTURE: VOLUME UP", #string to show
+            (10,50), #where to show on screen
+            cv2.FONT_HERSHEY_SIMPLEX, #font type
+            1, #scaling of text
+            (255,255,255), #colour of text
+            2 #thickness of text
+        )
 
-#=========== for volume down: ===========
+    #=========== for volume down: ===========
   
- elif fingers== gesture_dictionary["volume_down"]:
-    pyautogui.press("volumedown")
-    cv2.putText(
-        frame, #frame to put text on
-        "GESTURE: VOLUME DOWN", #string to show
-        (10,50), #where to show on screen
-        cv2.FONT_HERSHEY_SIMPLEX, #font type
-        1, #scaling of text
-        (255,255,255), #colour of text
-        2 #thickness of text
-    )
+    elif fingers== gesture_dictionary["volume_down"]:
+        pyautogui.press("volumedown")
+        cv2.putText(
+            frame, #frame to put text on
+            "GESTURE: VOLUME DOWN", #string to show
+            (10,50), #where to show on screen
+            cv2.FONT_HERSHEY_SIMPLEX, #font type
+            1, #scaling of text
+            (255,255,255), #colour of text
+            2 #thickness of text
+        )
 
 #hands action function:
 
 def action(fingers,frame, prev_fingers):
   
-  #call volume control function:
-  volume_control(fingers, frame)
+    #call volume control function:
+    volume_control(fingers, frame)
 
-  if fingers != prev_fingers:
+    if fingers != prev_fingers:
 
     #=========== for screenshot: ===========
 
-    if fingers == gesture_dictionary["screenshot"]:
-      screenshot=pyautogui.screenshot()
-      screenshot.save(f"Screenshot {(int(time.time() * 1000 ))}")
-      cv2.putText(
-        frame, #frame to put text on
-        "GESTURE: SCREENSHOT", #string to show
-        (10,50), #where to show on screen
-        cv2.FONT_HERSHEY_SIMPLEX, #font type
-        1, #scaling of text
-        (255,255,255), #colour of text
-        2 #thickness of text
-    )
+        if fingers == gesture_dictionary["screenshot"]:
+            screenshot=pyautogui.screenshot()
+            screenshot.save(f"Screenshot {(int(time.time() * 1000 ))}")
+            cv2.putText(
+                frame, #frame to put text on
+                "GESTURE: SCREENSHOT", #string to show
+                (10,50), #where to show on screen
+                cv2.FONT_HERSHEY_SIMPLEX, #font type
+                1, #scaling of text
+                (255,255,255), #colour of text
+                2 #thickness of text
+            )
 
     #=========== for scroll: ===========
 
-    elif fingers==gesture_dictionary["scroll"]:
-        pyautogui.press("pagedown")
-        cv2.putText(
-            frame, #frame to put text on
-            "GESTURE: SCROLL", #string to show
-            (10,50), #where to show on screen
-            cv2.FONT_HERSHEY_SIMPLEX, #font type
-            1, #scaling of text
-            (255,255,255), #colour of text
-            2 #thickness of text
+        elif fingers==gesture_dictionary["scroll"]:
+            pyautogui.press("pagedown")
+            cv2.putText(
+                frame, #frame to put text on
+                "GESTURE: SCROLL", #string to show
+                (10,50), #where to show on screen
+                cv2.FONT_HERSHEY_SIMPLEX, #font type
+                1, #scaling of text
+                (255,255,255), #colour of text
+                2 #thickness of text
         )
         
     #=========== for previous video: ===========
         
-    elif fingers == gesture_dictionary["previous"]:
-         pyautogui.hotkey("shift","p")
-         cv2.putText(
-             frame, #frame to put text on
-            "GESTURE: PREVIOUS VIDEO", #string to show
-            (10,50), #where to show on screen
-            cv2.FONT_HERSHEY_SIMPLEX, #font type
-            1, #scaling of text
-            (255,255,255), #colour of text
-            2 #thickness of text
-        )
+        elif fingers == gesture_dictionary["previous"]:
+            pyautogui.hotkey("shift","p")
+            cv2.putText(
+                frame, #frame to put text on
+                "GESTURE: PREVIOUS VIDEO", #string to show
+                (10,50), #where to show on screen
+                cv2.FONT_HERSHEY_SIMPLEX, #font type
+                1, #scaling of text
+                (255,255,255), #colour of text
+                2 #thickness of text
+            )
          
     #=========== for pause: ===========
          
-    elif fingers == gesture_dictionary["pause"]:
-         pyautogui.press("space")
-         cv2.putText(
-            frame, #frame to put text on
-            "GESTURE: PAUSE", #string to show
-            (10,50), #where to show on screen
-            cv2.FONT_HERSHEY_SIMPLEX, #font type
-            1, #scaling of text
-            (255,255,255), #colour of text
-            2 #thickness of text
-        )
+        elif fingers == gesture_dictionary["pause"]:
+            pyautogui.press("space")
+            cv2.putText(
+                frame, #frame to put text on
+                "GESTURE: PAUSE", #string to show
+                (10,50), #where to show on screen
+                cv2.FONT_HERSHEY_SIMPLEX, #font type
+                1, #scaling of text
+                (255,255,255), #colour of text
+                2 #thickness of text
+            )
          
     #=========== for play: ===========
          
-    elif fingers == gesture_dictionary["play"]:
-         pyautogui.press("space")
-         cv2.putText(
-            frame, #frame to put text on
-            "GESTURE: PLAY", #string to show
-            (10,50), #where to show on screen
-            cv2.FONT_HERSHEY_SIMPLEX, #font type
-            1, #scaling of text
-            (255,255,255), #colour of text
-            2 #thickness of text
-        )
+        elif fingers == gesture_dictionary["play"]:
+            pyautogui.press("space")
+            cv2.putText(
+                frame, #frame to put text on
+                "GESTURE: PLAY", #string to show
+                (10,50), #where to show on screen
+                cv2.FONT_HERSHEY_SIMPLEX, #font type
+                1, #scaling of text
+                (255,255,255), #colour of text
+                2 #thickness of text
+            )
          
     #=========== for skip: ===========
          
     elif fingers == gesture_dictionary["skip"]:
-         pyautogui.press("shift","n")
-         cv2.putText(
-            frame, #frame to put text on
-            "GESTURE: SKIP", #string to show
-            (10,50), #where to show on screen
-            cv2.FONT_HERSHEY_SIMPLEX, #font type
-            1, #scaling of text
-            (255,255,255), #colour of text
-            2 #thickness of text
-        )
+            pyautogui.press("shift","n")
+            cv2.putText(
+                frame, #frame to put text on
+                "GESTURE: SKIP", #string to show
+                (10,50), #where to show on screen
+                cv2.FONT_HERSHEY_SIMPLEX, #font type
+                1, #scaling of text
+                (255,255,255), #colour of text
+                2 #thickness of text
+            )
 
 def main ():
 
@@ -230,14 +230,14 @@ def main ():
 
                 prev_fingers = fingers.copy() #copying fingers to prev finger
 
-            cv2.imshow("Air controller", frame) #showing the frame
+            cv2.imshow("Air Controller", frame) #showing the frame
 
             if (cv2.waitKey(1) & 0xFF) == ord('q'): #check if q is pressed
                 break #if yes then break
 
     finally:
         cap.release() #release the camera
-        cv2.destroyAllWindows() #destroy all open cvs window
+        cv2.destroyAllWindows() #destroy all open-cv windows
 
 if __name__ == "__main__": #check if am i running or am i being import
     main()
