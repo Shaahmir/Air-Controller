@@ -1,6 +1,7 @@
 import cv2
 import mediapipe as mp #importing with a nickname/variable mp
 import pyautogui
+import screen_brightness_control as sbc
 import time #python default library
 
 #making and configuring hand model
@@ -24,7 +25,9 @@ gesture_dictionary = {
     "skip": [0, 0, 0, 0, 1],
     "previous": [1, 1, 1, 1, 0],
     "screenshot": [0, 1, 1, 1, 0],
-    "scroll": [0, 1, 0, 0, 0]
+    "scroll": [0, 1, 0, 0, 0],
+    "brightness_up" : [1, 1, 0, 0, 0],
+    "brightness_down" : [1, 0, 1, 1, 1]
 }
     
 #finger detection function:
@@ -100,12 +103,45 @@ def volume_control(fingers,frame):
             2 #thickness of text
         )
 
-#hands action function:
+#brightness control function
+
+def brightness_control(fingers, frame):
+
+    #=========== for brightness up: ===========
+     
+    if fingers == gesture_dictionary["brightness_up"]:
+        sbc.set_brightness("+2")
+        cv2.putText(
+            frame, #frame to put text on
+            "GESTURE: BRIGHTNESS UP", #string to show
+            (10,50), #where to show on screen
+            cv2.FONT_HERSHEY_SIMPLEX, #font type
+            1, #scaling of text
+            (255,255,255), #colour of text
+            2 #thickness of text
+        )
+
+    #========== for brightness down: ===========
+     
+    elif fingers == gesture_dictionary["brightness_down"]:
+        sbc.set_brightness("-2")
+        cv2.putText(
+            frame, #frame to put text on
+            "GESTURE: BRIGHTNESS DOWN", #string to show
+            (10,50), #where to show on screen
+            cv2.FONT_HERSHEY_SIMPLEX, #font type
+            1, #scaling of text
+            (255,255,255), #colour of text
+            2 #thickness of text
+        )
+
+#action function:
 
 def action(fingers,frame, prev_fingers):
   
-    #call volume control function:
+    #call volume and brightness control function:
     volume_control(fingers, frame)
+    brightness_control(fingers, frame)
 
     if fingers != prev_fingers:
 
@@ -206,17 +242,6 @@ def action(fingers,frame, prev_fingers):
                 2 #thickness of text
             )
 
-#mouse contoller function
-
-def mouse_control (landmarks_list):
-    screen_width, screen_height = pyautogui.size()
-
-    x = int(landmarks_list[8][0] * screen_width)
-    y = int(landmarks_list[8][0] * screen_height)
-
-    pyautogui.moveTo(x,y)
-
-
 def main ():
 
     cap = cv2.VideoCapture(0) #capture from primary camera
@@ -250,7 +275,6 @@ def main ():
                 fingers = [] #empty fingers list
                 finger_detection(landmarks_list, fingers) #detecting which finger is open and which one is closed
                 action(fingers, frame, prev_fingers ) #detecting which action to perform
-                # mouse_control(landmarks_list)
 
                 prev_fingers = fingers.copy() #copying fingers to prev finger
 
