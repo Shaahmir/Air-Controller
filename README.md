@@ -51,5 +51,5 @@ pip install opencv-python mediapipe pyautogui screen-brightness-control
 ## Run the Project
 
 ```bash
-python main.py
+python Air-Controller.py
 ```
