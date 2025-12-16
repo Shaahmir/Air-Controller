@@ -34,7 +34,9 @@ gesture_dictionary = {
     "skip":         [0, 0, 0, 0, 1],
     "previous":     [1, 1, 1, 1, 0],
     "screenshot":   [0, 1, 1, 1, 0],
-    "scroll":       [0, 1, 0, 0, 0]
+    "scroll":       [0, 1, 0, 0, 0],
+    "brightness_up" : [1, 1, 0, 0, 0],
+    "brightness_down" : [1, 0, 1, 1, 1]
 }
 ```
 
@@ -43,7 +45,7 @@ gesture_dictionary = {
 Install all required dependencies:
 
 ```bash
-pip install opencv-python mediapipe pyautogui
+pip install opencv-python mediapipe pyautogui screen-brightness-control
 ```
 
 ## Run the Project
