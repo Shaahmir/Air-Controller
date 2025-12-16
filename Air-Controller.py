@@ -74,7 +74,7 @@ def volume_control(fingers,frame):
  
     #=========== for volume up: ===========
 
-    if fingers== gesture_dictionary["volume_up"]:
+    if fingers == gesture_dictionary["volume_up"]:
         pyautogui.press("volumeup")
         cv2.putText(
             frame, #frame to put text on
@@ -88,7 +88,7 @@ def volume_control(fingers,frame):
 
     #=========== for volume down: ===========
   
-    elif fingers== gesture_dictionary["volume_down"]:
+    elif fingers == gesture_dictionary["volume_down"]:
         pyautogui.press("volumedown")
         cv2.putText(
             frame, #frame to put text on
@@ -113,7 +113,7 @@ def action(fingers,frame, prev_fingers):
 
         if fingers == gesture_dictionary["screenshot"]:
             screenshot=pyautogui.screenshot()
-            screenshot.save(f"Screenshot {(int(time.time() * 1000 ))}")
+            screenshot.save(f"Screenshot {(int(time.time() * 1000 ))}.png")
             cv2.putText(
                 frame, #frame to put text on
                 "GESTURE: SCREENSHOT", #string to show
@@ -126,7 +126,7 @@ def action(fingers,frame, prev_fingers):
 
     #=========== for scroll: ===========
 
-        elif fingers==gesture_dictionary["scroll"]:
+        elif fingers == gesture_dictionary["scroll"]:
             pyautogui.press("pagedown")
             cv2.putText(
                 frame, #frame to put text on
@@ -154,7 +154,13 @@ def action(fingers,frame, prev_fingers):
          
     #=========== for pause: ===========
          
-        elif fingers == gesture_dictionary["pause"]:
+        elif fingers == gesture_dictionary["pause"] and prev_fingers not in [
+            gesture_dictionary["volume_up"],
+            gesture_dictionary["volume_down"],
+            gesture_dictionary["skip"],
+            gesture_dictionary["previous"],
+            gesture_dictionary["screenshot"]
+        ]:
             pyautogui.press("space")
             cv2.putText(
                 frame, #frame to put text on
@@ -168,7 +174,13 @@ def action(fingers,frame, prev_fingers):
          
     #=========== for play: ===========
          
-        elif fingers == gesture_dictionary["play"]:
+        elif fingers == gesture_dictionary["play"] and prev_fingers not in [
+            gesture_dictionary["volume_up"],
+            gesture_dictionary["volume_down"],
+            gesture_dictionary["skip"],
+            gesture_dictionary["previous"],
+            gesture_dictionary["screenshot"]
+        ]:
             pyautogui.press("space")
             cv2.putText(
                 frame, #frame to put text on
@@ -182,8 +194,8 @@ def action(fingers,frame, prev_fingers):
          
     #=========== for skip: ===========
          
-    elif fingers == gesture_dictionary["skip"]:
-            pyautogui.press("shift","n")
+        elif fingers == gesture_dictionary["skip"]:
+            pyautogui.hotkey("shift","n")
             cv2.putText(
                 frame, #frame to put text on
                 "GESTURE: SKIP", #string to show
@@ -193,6 +205,17 @@ def action(fingers,frame, prev_fingers):
                 (255,255,255), #colour of text
                 2 #thickness of text
             )
+
+#mouse contoller function
+
+def mouse_control (landmarks_list):
+    screen_width, screen_height = pyautogui.size()
+
+    x = int(landmarks_list[8][0] * screen_width)
+    y = int(landmarks_list[8][0] * screen_height)
+
+    pyautogui.moveTo(x,y)
+
 
 def main ():
 
@@ -227,6 +250,7 @@ def main ():
                 fingers = [] #empty fingers list
                 finger_detection(landmarks_list, fingers) #detecting which finger is open and which one is closed
                 action(fingers, frame, prev_fingers ) #detecting which action to perform
+                # mouse_control(landmarks_list)
 
                 prev_fingers = fingers.copy() #copying fingers to prev finger
 
