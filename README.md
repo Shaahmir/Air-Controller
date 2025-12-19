@@ -19,9 +19,19 @@ This project recognizes predefined hand gestures and maps them to system/media a
 
 Each gesture is represented using a **5-element binary list** corresponding to finger states:
 
-
 - `1` → Finger is **up**
 - `0` → Finger is **down**
+
+## Air Mouse Controller
+
+Activate the **Air Mouse Controller** by pressing **Spacebar**. Once activated, your cursor will track the movement of your **index finger**.
+
+### Gestures
+- **Left Click:** Open your **thumb** while keeping the **index finger upright**, and close the remaining fingers.  
+- **Right Click:** Raise your **middle finger** while keeping the **index finger upright**, and close the other fingers.  
+
+### Exit
+To exit **Air Mouse Controller** mode, either press **ESC** or make a **fist**.
 
 ### Gesture Dictionary
 
@@ -39,6 +49,27 @@ gesture_dictionary = {
     "brightness_down" : [1, 0, 1, 1, 1]
 }
 ```
+### Gesture Dictionary
+
+```python
+cursor_controller = {
+    "move_cursor": [0, 1, 0, 0, 0],
+    "left_click": [1, 1, 0, 0, 0],
+    "right_click": [0, 1, 1, 0, 0],
+    "stop": [0, 0, 0, 0, 0]
+}
+```
+
+## Libraries / Requirements
+
+This project uses the following Python libraries:
+
+- [`cv2`](https://pypi.org/project/opencv-python/): OpenCV library for real-time computer vision.  
+- [`mediapipe`](https://pypi.org/project/mediapipe/): For hand tracking and gesture recognition.  
+- [`pyautogui`](https://pypi.org/project/PyAutoGUI/): To control mouse movements and clicks.  
+- [`screen_brightness_control`](https://pypi.org/project/screen-brightness-control/): To adjust screen brightness programmatically.  
+- [`time`](https://docs.python.org/3/library/time.html) (Python built-in library): For timing and delays.
+
 
 ## Installation & Run
 
