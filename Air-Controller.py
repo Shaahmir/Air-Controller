@@ -29,6 +29,20 @@ gesture_dictionary = {
     "brightness_up" : [1, 1, 0, 0, 0],
     "brightness_down" : [1, 0, 1, 1, 1]
 }
+
+#create a gesture recognize dictionary:
+
+cursor_controller = {
+    "move_cursor": [0, 1, 0, 0, 0],
+    "left_click": [1, 1, 0, 0, 0],
+    "right_click": [0, 1, 1, 0, 0],
+    "stop": [0, 0, 0, 0, 0]
+}
+
+#intializing some variables
+
+mouse_req = False
+stop_mouse = False
     
 #finger detection function:
 
@@ -36,7 +50,7 @@ def finger_detection(landmarks_list,fingers):
 
     #========== for thumb: ===========
 
-    if landmarks_list[4][0] < landmarks_list[3][0]:
+    if landmarks_list[4][0] < landmarks_list[2][0]:
         fingers.append(1)
     else:
         fingers.append(0)
@@ -77,7 +91,7 @@ def volume_control(fingers,frame):
  
     #=========== for volume up: ===========
 
-    if fingers == gesture_dictionary["volume_up"]:
+    if fingers == gesture_dictionary["volume_up"]  and not mouse_req:
         pyautogui.press("volumeup")
         cv2.putText(
             frame, #frame to put text on
@@ -91,7 +105,7 @@ def volume_control(fingers,frame):
 
     #=========== for volume down: ===========
   
-    elif fingers == gesture_dictionary["volume_down"]:
+    elif fingers == gesture_dictionary["volume_down"]  and not mouse_req:
         pyautogui.press("volumedown")
         cv2.putText(
             frame, #frame to put text on
@@ -109,7 +123,7 @@ def brightness_control(fingers, frame):
 
     #=========== for brightness up: ===========
      
-    if fingers == gesture_dictionary["brightness_up"]:
+    if fingers == gesture_dictionary["brightness_up"]  and not mouse_req:
         sbc.set_brightness("+2")
         cv2.putText(
             frame, #frame to put text on
@@ -123,7 +137,7 @@ def brightness_control(fingers, frame):
 
     #========== for brightness down: ===========
      
-    elif fingers == gesture_dictionary["brightness_down"]:
+    elif fingers == gesture_dictionary["brightness_down"]  and not mouse_req:
         sbc.set_brightness("-2")
         cv2.putText(
             frame, #frame to put text on
@@ -135,7 +149,7 @@ def brightness_control(fingers, frame):
             2 #thickness of text
         )
 
-#action function:
+#action performing function:
 
 def action(fingers,frame, prev_fingers):
   
@@ -162,7 +176,7 @@ def action(fingers,frame, prev_fingers):
 
     #=========== for scroll: ===========
 
-        elif fingers == gesture_dictionary["scroll"]:
+        elif fingers == gesture_dictionary["scroll"] and not mouse_req:
             pyautogui.press("pagedown")
             cv2.putText(
                 frame, #frame to put text on
@@ -176,7 +190,7 @@ def action(fingers,frame, prev_fingers):
         
     #=========== for previous video: ===========
         
-        elif fingers == gesture_dictionary["previous"]:
+        elif fingers == gesture_dictionary["previous"] and not mouse_req:
             pyautogui.hotkey("shift","p")
             cv2.putText(
                 frame, #frame to put text on
@@ -230,7 +244,7 @@ def action(fingers,frame, prev_fingers):
          
     #=========== for skip: ===========
          
-        elif fingers == gesture_dictionary["skip"]:
+        elif fingers == gesture_dictionary["skip"] and not mouse_req:
             pyautogui.hotkey("shift","n")
             cv2.putText(
                 frame, #frame to put text on
@@ -241,6 +255,51 @@ def action(fingers,frame, prev_fingers):
                 (255,255,255), #colour of text
                 2 #thickness of text
             )
+            
+        #========== for left click: ==========
+
+        elif fingers == cursor_controller["left_click"] and mouse_req:
+            pyautogui.click()
+            cv2.putText(
+                frame, #frame to put text on
+                "GESTURE: LEFT CLICK",  #string to show
+                (10,50), #where to show on screen
+                cv2.FONT_HERSHEY_SIMPLEX, #font type
+                1, #scaling of text
+                (255,255,255), #colour of text
+                2 #thickness of text
+            )
+            
+        #========== for right click: ==========
+
+        elif fingers == cursor_controller["right_click"] and mouse_req:
+            pyautogui.rightClick()
+            cv2.putText(
+                frame, #frame to put text on
+                "GESTURE: RIGHT CLICK",  #string to show
+                (10,50), #where to show on screen
+                cv2.FONT_HERSHEY_SIMPLEX, #font type
+                1, #scaling of text
+                (255,255,255), #colour of text
+                2 #thickness of text
+            )
+
+def mouse_control (landmarks_list, fingers):
+
+    global mouse_req #because we want to change the variable
+    global stop_mouse #same for this variable
+
+    # stop tracking
+    if  stop_mouse or fingers == cursor_controller["stop"]:
+        mouse_req = False
+        return #stops the function right here
+
+    screen_width, screen_height = pyautogui.size() #getting user's screen size
+
+    x = int(landmarks_list[8][0] * screen_width) #calculating x co-ordinates
+    y = int(landmarks_list[8][1] * screen_height) #calculating y co-ordinates
+    
+    pyautogui.moveTo(x,y, duration=0) #moving cursor with index finger
 
 def main ():
 
@@ -248,6 +307,9 @@ def main ():
 
     try:
         prev_fingers = None #to keep track of previous gesture
+
+        global mouse_req #because we want to change the variable
+        global stop_mouse #same for this variable
 
         #loop to capture each frame
         while cap.isOpened():
@@ -276,12 +338,25 @@ def main ():
                 finger_detection(landmarks_list, fingers) #detecting which finger is open and which one is closed
                 action(fingers, frame, prev_fingers ) #detecting which action to perform
 
+                if mouse_req: #if user press spacebar
+                    mouse_control(landmarks_list, fingers) #moving mouse with index finger
+
                 prev_fingers = fingers.copy() #copying fingers to prev finger
+            
+            key = cv2.waitKey(1) & 0xFF  # read key once per loop
+
+            if key == ord(' '): #check if user is pressing spacebar
+                    mouse_req = True
+                    stop_mouse = False 
+
+            elif key == 27: #check if user is pressing ESC
+                    stop_mouse = True
+                    mouse_req = False 
+
+            elif key == ord('q'): #check if q is pressed
+                break #if yes then break
 
             cv2.imshow("Air Controller", frame) #showing the frame
-
-            if (cv2.waitKey(1) & 0xFF) == ord('q'): #check if q is pressed
-                break #if yes then break
 
     finally:
         cap.release() #release the camera
