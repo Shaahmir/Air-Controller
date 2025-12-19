@@ -22,6 +22,8 @@ Each gesture is represented using a **5-element binary list** corresponding to f
 - `1` → Finger is **up**
 - `0` → Finger is **down**
 
+---
+
 ## Air Mouse Controller
 
 Activate the **Air Mouse Controller** by pressing **Spacebar**. Once activated, your cursor will track the movement of your **index finger**.
@@ -33,23 +35,25 @@ Activate the **Air Mouse Controller** by pressing **Spacebar**. Once activated, 
 ### Exit
 To exit **Air Mouse Controller** mode, either press **ESC** or make a **fist**.
 
+---
+
 ### Gesture Dictionary
 
 ```python
 gesture_dictionary = {
-    "volume_up":    [0, 1, 1, 0, 0],
-    "volume_down":  [0, 0, 0, 1, 1],
-    "play":         [0, 0, 0, 0, 0],
-    "pause":        [1, 1, 1, 1, 1],
-    "skip":         [0, 0, 0, 0, 1],
-    "previous":     [1, 1, 1, 1, 0],
-    "screenshot":   [0, 1, 1, 1, 0],
-    "scroll":       [0, 1, 0, 0, 0],
+    "volume_up": [0, 1, 1, 0, 0],
+    "volume_down": [0, 0, 0, 1, 1],
+    "play": [0, 0, 0, 0, 0],
+    "pause": [1, 1, 1, 1, 1],
+    "skip": [0, 0, 0, 0, 1],
+    "previous": [1, 1, 1, 1, 0],
+    "screenshot": [0, 1, 1, 1, 0],
+    "scroll": [0, 1, 0, 0, 0],
     "brightness_up" : [1, 1, 0, 0, 0],
     "brightness_down" : [1, 0, 1, 1, 1]
 }
 ```
-### Gesture Dictionary
+### Cursor Controller Dictionary
 
 ```python
 cursor_controller = {
@@ -60,6 +64,8 @@ cursor_controller = {
 }
 ```
 
+---
+
 ## Libraries / Requirements
 
 This project uses the following Python libraries:
@@ -69,6 +75,8 @@ This project uses the following Python libraries:
 - [`pyautogui`](https://pypi.org/project/PyAutoGUI/): To control mouse movements and clicks.  
 - [`screen_brightness_control`](https://pypi.org/project/screen-brightness-control/): To adjust screen brightness programmatically.  
 - [`time`](https://docs.python.org/3/library/time.html) (Python built-in library): For timing and delays.
+
+---
 
 
 ## Installation & Run
@@ -84,3 +92,4 @@ pip install opencv-python mediapipe pyautogui screen-brightness-control
 ```bash
 python Air-Controller.py
 ```
+---
