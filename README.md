@@ -1,7 +1,6 @@
 # Air-Controller - A Gesture Detection System (Python)
 
-A real-time **hand gesture detection system** built using **Python**, **OpenCV**, and **MediaPipe**.  
-This project recognizes predefined hand gestures and maps them to system/media actions such as volume control, play/pause, scrolling, and screenshots.
+A Real-Time **Hand Gesture Control System** – A cutting-edge Python project leveraging **OpenCV** and **MediaPipe** to bring intuitive, touch-free control to your computer. This system recognizes a variety of predefined hand gestures and seamlessly maps them to practical actions, including **volume adjustment**, **brightness control**, **media playback (play/pause, next/previous)**, **scrolling**, **screenshots**, and even precise **cursor control with left and right clicks**. Transform your hand movements into a powerful, natural interface and experience the next level of interactive computing.
 
 ---
 
